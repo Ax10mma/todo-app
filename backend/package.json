@@ -1,0 +1,13 @@
+{
+  "name": "todo-app-backend",
+  "version": "1.0.0",
+  "description": "Backend for ToDo List application",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "node --watch server.js"
+  },
+  "dependencies": {
+    "express": "^5.1.0"
+  }
+}

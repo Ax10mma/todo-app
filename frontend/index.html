@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>ToDo List</title>
+
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+    <main class="container">
+
+        <section class="todo-app">
+
+            <h1>Мій ToDo List</h1>
+
+            <p class="subtitle">
+                Організуйте свої завдання просто та зручно
+            </p>
+
+            <form id="taskForm" class="task-form">
+
+                <input
+                    type="text"
+                    id="taskInput"
+                    placeholder="Введіть нове завдання..."
+                    autocomplete="off"
+                >
+
+                <button type="submit">
+                    Додати
+                </button>
+
+            </form>
+
+            <div class="controls">
+
+                <button
+                    class="filter active"
+                    data-filter="all">
+                    Усі
+                </button>
+
+                <button
+                    class="filter"
+                    data-filter="active">
+                    Активні
+                </button>
+
+                <button
+                    class="filter"
+                    data-filter="completed">
+                    Виконані
+                </button>
+
+            </div>
+
+            <ul id="taskList"></ul>
+
+            <div class="footer">
+
+                <span id="taskCounter">
+                    Завдань: 0
+                </span>
+
+                <button id="clearCompleted">
+                    Очистити виконані
+                </button>
+
+            </div>
+
+        </section>
+
+    </main>
+
+    <script src="app.js"></script>
+
+</body>
+</html>

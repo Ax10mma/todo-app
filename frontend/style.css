@@ -1,0 +1,184 @@
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    background: linear-gradient(135deg, #667eea, #764ba2);
+    min-height: 100vh;
+    padding: 40px 20px;
+}
+
+.container {
+    max-width: 650px;
+    margin: 0 auto;
+}
+
+.todo-app {
+    background: white;
+    border-radius: 20px;
+    padding: 35px;
+    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.2);
+}
+
+h1 {
+    text-align: center;
+    font-size: 32px;
+    color: #222;
+    margin-bottom: 10px;
+}
+
+.subtitle {
+    text-align: center;
+    color: #777;
+    margin-bottom: 30px;
+}
+
+.task-form {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 25px;
+}
+
+.task-form input {
+    flex: 1;
+    padding: 14px 16px;
+    border: 2px solid #ddd;
+    border-radius: 10px;
+    font-size: 16px;
+    outline: none;
+}
+
+.task-form input:focus {
+    border-color: #667eea;
+}
+
+.task-form button {
+    border: none;
+    border-radius: 10px;
+    padding: 0 22px;
+    background: #667eea;
+    color: white;
+    font-size: 16px;
+    cursor: pointer;
+    transition: 0.2s;
+}
+
+.task-form button:hover {
+    background: #5568d8;
+}
+
+.controls {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    margin-bottom: 20px;
+}
+
+.filter {
+    border: none;
+    background: #f1f1f1;
+    padding: 8px 15px;
+    border-radius: 20px;
+    cursor: pointer;
+}
+
+.filter.active {
+    background: #667eea;
+    color: white;
+}
+
+#taskList {
+    list-style: none;
+}
+
+.task {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 15px;
+    border-bottom: 1px solid #eee;
+}
+
+.task:last-child {
+    border-bottom: none;
+}
+
+.task-checkbox {
+    width: 20px;
+    height: 20px;
+    cursor: pointer;
+}
+
+.task-title {
+    flex: 1;
+    font-size: 16px;
+    color: #333;
+}
+
+.task.completed .task-title {
+    text-decoration: line-through;
+    color: #999;
+}
+
+.delete-btn {
+    border: none;
+    background: #ffeded;
+    color: #e74c3c;
+    padding: 8px 12px;
+    border-radius: 8px;
+    cursor: pointer;
+}
+
+.delete-btn:hover {
+    background: #ffdada;
+}
+
+.empty {
+    text-align: center;
+    color: #999;
+    padding: 30px;
+}
+
+.footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 20px;
+    padding-top: 20px;
+    border-top: 1px solid #eee;
+    color: #666;
+}
+
+#clearCompleted {
+    border: none;
+    background: transparent;
+    color: #667eea;
+    cursor: pointer;
+}
+
+#clearCompleted:hover {
+    text-decoration: underline;
+}
+
+@media (max-width: 600px) {
+
+    .todo-app {
+        padding: 25px 20px;
+    }
+
+    .task-form {
+        flex-direction: column;
+    }
+
+    .task-form button {
+        padding: 13px;
+    }
+
+    .footer {
+        flex-direction: column;
+        gap: 10px;
+    }
+}
