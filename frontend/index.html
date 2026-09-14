@@ -1,82 +1,284 @@
 <!DOCTYPE html>
 <html lang="uk">
+
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
 
     <title>ToDo List</title>
 
-    <link rel="stylesheet" href="style.css">
+    <link
+        rel="stylesheet"
+        href="style.css"
+    >
 </head>
 
 <body>
 
-    <main class="container">
+<main class="container">
 
-        <section class="todo-app">
+    <section class="todo-app">
 
-            <h1>Мій ToDo List</h1>
+        <header class="header">
 
-            <p class="subtitle">
-                Організуйте свої завдання просто та зручно
-            </p>
+            <div>
+                <h1>Мій ToDo List</h1>
 
-            <form id="taskForm" class="task-form">
+                <p>
+                    Організуйте свої завдання просто та зручно
+                </p>
+            </div>
 
-                <input
-                    type="text"
-                    id="taskInput"
-                    placeholder="Введіть нове завдання..."
-                    autocomplete="off"
-                >
+            <button
+                id="themeButton"
+                class="theme-button"
+                title="Змінити тему"
+            >
+                🌙
+            </button>
 
-                <button type="submit">
-                    Додати
-                </button>
+        </header>
 
-            </form>
 
-            <div class="controls">
+        <!-- Статистика -->
 
-                <button
-                    class="filter active"
-                    data-filter="all">
-                    Усі
-                </button>
+        <section class="statistics">
 
-                <button
-                    class="filter"
-                    data-filter="active">
-                    Активні
-                </button>
+            <div class="stat-card">
+                <span id="totalTasks">0</span>
+                <small>Усього</small>
+            </div>
 
-                <button
-                    class="filter"
-                    data-filter="completed">
-                    Виконані
-                </button>
+            <div class="stat-card">
+                <span id="activeTasks">0</span>
+                <small>Активні</small>
+            </div>
+
+            <div class="stat-card">
+                <span id="completedTasks">0</span>
+                <small>Виконані</small>
+            </div>
+
+        </section>
+
+
+        <!-- Прогрес -->
+
+        <section class="progress-section">
+
+            <div class="progress-info">
+
+                <span>Прогрес</span>
+
+                <span id="progressText">
+                    0%
+                </span>
 
             </div>
 
-            <ul id="taskList"></ul>
+            <div class="progress-bar">
 
-            <div class="footer">
-
-                <span id="taskCounter">
-                    Завдань: 0
-                </span>
-
-                <button id="clearCompleted">
-                    Очистити виконані
-                </button>
+                <div
+                    id="progressFill"
+                    class="progress-fill"
+                ></div>
 
             </div>
 
         </section>
 
-    </main>
 
-    <script src="app.js"></script>
+        <!-- Пошук -->
+
+        <div class="search-box">
+
+            <span>🔍</span>
+
+            <input
+                type="text"
+                id="searchInput"
+                placeholder="Пошук завдань..."
+                autocomplete="off"
+            >
+
+        </div>
+
+
+        <!-- Додавання -->
+
+        <form
+            id="taskForm"
+            class="task-form"
+        >
+
+            <input
+                type="text"
+                id="taskInput"
+                placeholder="Введіть нове завдання..."
+                autocomplete="off"
+            >
+
+            <select id="priorityInput">
+
+                <option value="low">
+                    🟢 Низький
+                </option>
+
+                <option
+                    value="medium"
+                    selected
+                >
+                    🟡 Середній
+                </option>
+
+                <option value="high">
+                    🔴 Високий
+                </option>
+
+            </select>
+
+            <input
+                type="date"
+                id="dateInput"
+            >
+
+            <button type="submit">
+                + Додати
+            </button>
+
+        </form>
+
+
+        <!-- Фільтри -->
+
+        <div class="controls">
+
+            <button
+                class="filter active"
+                data-filter="all"
+            >
+                Усі
+            </button>
+
+            <button
+                class="filter"
+                data-filter="active"
+            >
+                Активні
+            </button>
+
+            <button
+                class="filter"
+                data-filter="completed"
+            >
+                Виконані
+            </button>
+
+        </div>
+
+
+        <!-- Список -->
+
+        <ul id="taskList"></ul>
+
+
+        <!-- Нижня панель -->
+
+        <div class="footer">
+
+            <span id="taskCounter">
+                Залишилося завдань: 0
+            </span>
+
+            <button id="clearCompleted">
+                Очистити виконані
+            </button>
+
+        </div>
+
+    </section>
+
+</main>
+
+
+<!-- Модальне вікно редагування -->
+
+<div
+    id="editModal"
+    class="modal hidden"
+>
+
+    <div class="modal-content">
+
+        <div class="modal-header">
+
+            <h2>Редагувати завдання</h2>
+
+            <button
+                id="closeModal"
+                class="close-button"
+            >
+                ×
+            </button>
+
+        </div>
+
+        <input
+            type="text"
+            id="editTitle"
+            placeholder="Назва завдання"
+        >
+
+        <select id="editPriority">
+
+            <option value="low">
+                🟢 Низький
+            </option>
+
+            <option value="medium">
+                🟡 Середній
+            </option>
+
+            <option value="high">
+                🔴 Високий
+            </option>
+
+        </select>
+
+        <input
+            type="date"
+            id="editDate"
+        >
+
+        <div class="modal-actions">
+
+            <button
+                id="cancelEdit"
+                class="cancel-button"
+            >
+                Скасувати
+            </button>
+
+            <button
+                id="saveEdit"
+                class="save-button"
+            >
+                Зберегти
+            </button>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+<script src="app.js"></script>
 
 </body>
+
 </html>

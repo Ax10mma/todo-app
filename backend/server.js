@@ -10,10 +10,10 @@ const tasksFile = path.join(__dirname, "tasks.json");
 // Middleware
 app.use(express.json());
 
-// Дозволяємо серверу віддавати frontend
+// Frontend
 app.use(express.static(path.join(__dirname, "../frontend")));
 
-// Читання завдань із файлу
+// Робота з JSON-файлом
 function readTasks() {
     try {
         const data = fs.readFileSync(tasksFile, "utf8");
@@ -23,7 +23,6 @@ function readTasks() {
     }
 }
 
-// Запис завдань у файл
 function writeTasks(tasks) {
     fs.writeFileSync(
         tasksFile,
@@ -32,17 +31,19 @@ function writeTasks(tasks) {
     );
 }
 
-// GET /api/tasks
-// Отримати всі завдання
+// GET — отримати всі завдання
 app.get("/api/tasks", (req, res) => {
     const tasks = readTasks();
     res.json(tasks);
 });
 
-// POST /api/tasks
-// Додати нове завдання
+// POST — створити завдання
 app.post("/api/tasks", (req, res) => {
-    const { title } = req.body;
+    const {
+        title,
+        priority = "medium",
+        dueDate = ""
+    } = req.body;
 
     if (!title || !title.trim()) {
         return res.status(400).json({
@@ -56,17 +57,62 @@ app.post("/api/tasks", (req, res) => {
         id: Date.now().toString(),
         title: title.trim(),
         completed: false,
+        priority,
+        dueDate,
         createdAt: new Date().toISOString()
     };
 
     tasks.push(newTask);
+
     writeTasks(tasks);
 
     res.status(201).json(newTask);
 });
 
-// PATCH /api/tasks/:id
-// Змінити статус завдання
+// PUT — редагувати завдання
+app.put("/api/tasks/:id", (req, res) => {
+    const tasks = readTasks();
+
+    const task = tasks.find(
+        task => task.id === req.params.id
+    );
+
+    if (!task) {
+        return res.status(404).json({
+            message: "Завдання не знайдено"
+        });
+    }
+
+    const {
+        title,
+        priority,
+        dueDate
+    } = req.body;
+
+    if (title !== undefined) {
+        if (!title.trim()) {
+            return res.status(400).json({
+                message: "Назва завдання не може бути порожньою"
+            });
+        }
+
+        task.title = title.trim();
+    }
+
+    if (priority !== undefined) {
+        task.priority = priority;
+    }
+
+    if (dueDate !== undefined) {
+        task.dueDate = dueDate;
+    }
+
+    writeTasks(tasks);
+
+    res.json(task);
+});
+
+// PATCH — змінити статус
 app.patch("/api/tasks/:id", (req, res) => {
     const tasks = readTasks();
 
@@ -87,16 +133,15 @@ app.patch("/api/tasks/:id", (req, res) => {
     res.json(task);
 });
 
-// DELETE /api/tasks/:id
-// Видалити завдання
+// DELETE — видалити завдання
 app.delete("/api/tasks/:id", (req, res) => {
     const tasks = readTasks();
 
-    const taskExists = tasks.some(
+    const exists = tasks.some(
         task => task.id === req.params.id
     );
 
-    if (!taskExists) {
+    if (!exists) {
         return res.status(404).json({
             message: "Завдання не знайдено"
         });
@@ -109,7 +154,7 @@ app.delete("/api/tasks/:id", (req, res) => {
     writeTasks(updatedTasks);
 
     res.json({
-        message: "Завдання успішно видалено"
+        message: "Завдання видалено"
     });
 });
 
